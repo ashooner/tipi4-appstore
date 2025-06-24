@@ -1,0 +1,20 @@
+{
+  "name": "Wanderer",
+  "id": "wanderer",
+  "available": true,
+  "short_desc": "Self-hosted mapping and GPX management platform.",
+  "author": "flomp",
+  "port": 3000,
+  "categories": ["utilities"],
+  "description": "Wanderer combines a PocketBase backend, Meilisearch and a Svelte front-end to manage maps and GPX tracks.",
+  "tipi_version": 1,
+  "version": "latest",
+  "source": "https://github.com/flomp/wanderer",
+  "website": "https://github.com/flomp/wanderer",
+  "exposable": true,
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1750789719488,
+  "updated_at": 1750789719488,
+  "dynamic_config": true,
+  "form_fields": []
+}
