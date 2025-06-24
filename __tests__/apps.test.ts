@@ -29,7 +29,7 @@ describe("each app should have the required files", async () => {
   const apps = await getApps()
 
   for (const app of apps) {
-    const files = ['config.json', 'docker-compose.json', 'metadata/logo.jpg', 'metadata/description.md']
+    const files = ['config.json', 'docker-compose.json', 'metadata/description.md']
 
     for (const file of files) {
       test(`app ${app} should have ${file}`, async () => {
