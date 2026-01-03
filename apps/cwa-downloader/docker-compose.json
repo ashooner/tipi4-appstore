@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "cwa-downloader",
-      "image": "ghcr.io/calibrain/cwa-downloader-book-downloader:latest",
+      "image": "ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.4.0",
       "environment": [
         {
           "key": "PUID",
