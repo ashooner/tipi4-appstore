@@ -1,0 +1,29 @@
+{
+  "$schema": "../app-info-schema.json",
+  "name": "Calibre-Web-Automated - EBook Reader",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8100,
+  "tipi_version": 16,
+  "version": "3.1.4",
+  "id": "calibre-web-automated",
+  "categories": ["books"],
+  "description": "On the initial setup screen, enter /calibre as your calibre library location, check box Separate Book Files from Library, then enter /books. \n Default admin login: Username: admin Password: admin123",
+  "short_desc": "Calibre-Web Automated aims to be an all-in-one solution, combining the modern lightweight web UI from Calibre-Web with the robust, versatile feature set of Calibre, with a slew of extra features and automations thrown in on top.",
+  "author": "https://github.com/crocodilestick",
+  "source": "https://github.com/crocodilestick/Calibre-Web-Automated",
+  "form_fields": [
+        {
+      "type": "text",
+      "label": "Hardcover Token",
+      "hint":"Hardcover API Key required for Hardcover as a Metadata Provider, get one here: https://docs.hardcover.app/api/getting-started/",
+      "required": false,
+      "env_variable": "HARDCOVER_TOKEN"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1691943801422,
+  "updated_at": 1761338378451,
+  "min_tipi_version": "4.5.0"
+}
