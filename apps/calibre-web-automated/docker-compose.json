@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "calibre-web-automated",
+      "image": "crocodilestick/calibre-web-automated:V3.1.4",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        },
+        {
+          "key": "HARDCOVER_TOKEN",
+          "value": "${HARDCOVER_TOKEN}"
+        }
+      ],
+      "internalPort": 8083,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media/data/books",
+          "containerPath": "/books",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media/book-ingest",
+          "containerPath": "/cwa-book-ingest",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/calibre/library",
+          "containerPath": "/calibre-library",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
+    }
+  ]
+}
