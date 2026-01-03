@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:V3.1.4
+    container_name: calibre-web-automated
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      # Hardcover API Key required for Hardcover as a Metadata Provider, get one here: https://docs.hardcover.app/api/getting-started/
+      - HARDCOVER_TOKEN=${HARDCOVER_TOKEN}
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+      #- ${ROOT_FOLDER_HOST}/media/data/calibre:/calibre
+      - ${ROOT_FOLDER_HOST}/media/data/books:/books
+
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - ${ROOT_FOLDER_HOST}/media/book-ingest:/cwa-book-ingest
+      # If you don't have an existing library, CWA will automatically create one at the bind provided here
+      - ${APP_DATA_DIR}/data/calibre/library:/calibre-library
+      # If you use calibre plugins, you can bind your plugins folder here to have CWA attempt to add them to its workflow (WIP)
+      # If you are starting with a fresh install, you also need to copy customize.py.json to the Calibre config volume above, in /path/to/config/folder/.config/calibre/customize.py.json, see the note below for more info
+      # - /path/to/your/calibre/plugins/folder:/config/.config/calibre/plugins
+    ports:
+      - ${APP_PORT}:8083
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.calibre-web-automated-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.calibre-web-automated.loadbalancer.server.port: 8083
+      traefik.http.routers.calibre-web-automated-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.calibre-web-automated-insecure.entrypoints: web
+      traefik.http.routers.calibre-web-automated-insecure.service: calibre-web-automated
+      traefik.http.routers.calibre-web-automated-insecure.middlewares: calibre-web-automated-web-redirect
+      traefik.http.routers.calibre-web-automated.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.calibre-web-automated.entrypoints: websecure
+      traefik.http.routers.calibre-web-automated.service: calibre-web-automated
+      traefik.http.routers.calibre-web-automated.tls.certresolver: myresolver
+      traefik.http.routers.calibre-web-automated-local-insecure.rule: Host(`calibre-web-automated.${LOCAL_DOMAIN}`)
+      traefik.http.routers.calibre-web-automated-local-insecure.entrypoints: web
+      traefik.http.routers.calibre-web-automated-local-insecure.service: calibre-web-automated
+      traefik.http.routers.calibre-web-automated-local-insecure.middlewares: calibre-web-automated-web-redirect
+      traefik.http.routers.calibre-web-automated-local.rule: Host(`calibre-web-automated.${LOCAL_DOMAIN}`)
+      traefik.http.routers.calibre-web-automated-local.entrypoints: websecure
+      traefik.http.routers.calibre-web-automated-local.service: calibre-web-automated
+      traefik.http.routers.calibre-web-automated-local.tls: true
+      runtipi.managed: true
