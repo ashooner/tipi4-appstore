@@ -1,0 +1,41 @@
+services:
+  cwa-downloader:
+    image: ghcr.io/calibrain/cwa-downloader-book-downloader:latest
+    container_name: cwa-downloader
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    ports:
+      - ${APP_PORT}:8084
+    restart: unless-stopped
+    volumes:
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - ${ROOT_FOLDER_HOST}/media/book-ingest:/cwa-book-ingest
+
+      - ${APP_DATA_DIR}/data/config:/config
+      # Download client mount (must match your torrent/usenet client's volume)
+      # - /path/to/downloads:/downloads
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.cwa-downloader-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.cwa-downloader.loadbalancer.server.port: 8083
+      traefik.http.routers.cwa-downloader-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.cwa-downloader-insecure.entrypoints: web
+      traefik.http.routers.cwa-downloader-insecure.service: cwa-downloader
+      traefik.http.routers.cwa-downloader-insecure.middlewares: cwa-downloader-web-redirect
+      traefik.http.routers.cwa-downloader.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.cwa-downloader.entrypoints: websecure
+      traefik.http.routers.cwa-downloader.service: cwa-downloader
+      traefik.http.routers.cwa-downloader.tls.certresolver: myresolver
+      traefik.http.routers.cwa-downloader-local-insecure.rule: Host(`cwa-downloader.${LOCAL_DOMAIN}`)
+      traefik.http.routers.cwa-downloader-local-insecure.entrypoints: web
+      traefik.http.routers.cwa-downloader-local-insecure.service: cwa-downloader
+      traefik.http.routers.cwa-downloader-local-insecure.middlewares: cwa-downloader-web-redirect
+      traefik.http.routers.cwa-downloader-local.rule: Host(`cwa-downloader.${LOCAL_DOMAIN}`)
+      traefik.http.routers.cwa-downloader-local.entrypoints: websecure
+      traefik.http.routers.cwa-downloader-local.service: cwa-downloader
+      traefik.http.routers.cwa-downloader-local.tls: true
+      runtipi.managed: true

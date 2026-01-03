@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "cwa-downloader",
+      "image": "ghcr.io/calibrain/cwa-downloader-book-downloader:latest",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        }
+      ],
+      "internalPort": 8084,
+      "volumes": [
+        {
+          "hostPath": "${ROOT_FOLDER_HOST}/media/book-ingest",
+          "containerPath": "/cwa-book-ingest",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ],
+      "isMain": true,
+      "extraLabels": {
+        "runtipi.managed": true
+      }
+    }
+  ]
+}
