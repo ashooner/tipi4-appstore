@@ -44,6 +44,33 @@
         "--path.sysfs=/host/sys",
         "--path.rootfs=/rootfs"
       ]
+    },
+    {
+      "name": "cadvisor",
+      "image": "gcr.io/cadvisor/cadvisor:v0.51.0",
+      "internalPort": 8080,
+      "volumes": [
+        {
+          "hostPath": "/",
+          "containerPath": "/rootfs",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/var/run",
+          "containerPath": "/var/run",
+          "readOnly": false
+        },
+        {
+          "hostPath": "/sys",
+          "containerPath": "/sys",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/var/lib/docker",
+          "containerPath": "/var/lib/docker",
+          "readOnly": true
+        }
+      ]
     }
   ],
   "schemaVersion": 2
