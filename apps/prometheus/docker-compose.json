@@ -17,6 +17,33 @@
         }
       ],
       "environment": []
+    },
+    {
+      "name": "node-exporter",
+      "image": "prom/node-exporter:v1.8.1",
+      "internalPort": 9100,
+      "volumes": [
+        {
+          "hostPath": "/proc",
+          "containerPath": "/host/proc",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/sys",
+          "containerPath": "/host/sys",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/",
+          "containerPath": "/rootfs",
+          "readOnly": true
+        }
+      ],
+      "command": [
+        "--path.procfs=/host/proc",
+        "--path.sysfs=/host/sys",
+        "--path.rootfs=/rootfs"
+      ]
     }
   ],
   "schemaVersion": 2
