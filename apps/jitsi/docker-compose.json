@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "web",
+      "image": "jitsi/web:stable-10741",
+      "isMain": true,
+      "internalPort": 80,
+      "dependsOn": {
+        "jvb": { "condition": "service_started" }
+      },
+      "environment": [
+        { "key": "PUBLIC_URL", "value": "${PUBLIC_URL}" },
+        { "key": "XMPP_DOMAIN", "value": "meet.jitsi" },
+        { "key": "XMPP_AUTH_DOMAIN", "value": "auth.meet.jitsi" },
+        { "key": "XMPP_BOSH_URL_BASE", "value": "http://prosody:5280" },
+        { "key": "XMPP_MUC_DOMAIN", "value": "muc.meet.jitsi" },
+        { "key": "XMPP_GUEST_DOMAIN", "value": "guest.meet.jitsi" },
+        { "key": "XMPP_HIDDEN_DOMAIN", "value": "focus.meet.jitsi" },
+        { "key": "XMPP_RECORDER_DOMAIN", "value": "recorder.meet.jitsi" },
+        { "key": "JICOFO_AUTH_PASSWORD", "value": "${JICOFO_AUTH_PASSWORD}" },
+        { "key": "JVB_AUTH_PASSWORD", "value": "${JVB_AUTH_PASSWORD}" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/web", "containerPath": "/config" },
+        { "hostPath": "${APP_DATA_DIR}/data/web/crontabs", "containerPath": "/var/spool/cron/crontabs" },
+        { "hostPath": "${APP_DATA_DIR}/data/transcripts", "containerPath": "/usr/share/jitsi-meet/transcripts" }
+      ]
+    },
+    {
+      "name": "prosody",
+      "image": "jitsi/prosody:stable-10741",
+      "internalPort": 5280,
+      "environment": [
+        { "key": "XMPP_DOMAIN", "value": "meet.jitsi" },
+        { "key": "XMPP_AUTH_DOMAIN", "value": "auth.meet.jitsi" },
+        { "key": "XMPP_MUC_DOMAIN", "value": "muc.meet.jitsi" },
+        { "key": "XMPP_GUEST_DOMAIN", "value": "guest.meet.jitsi" },
+        { "key": "XMPP_HIDDEN_DOMAIN", "value": "focus.meet.jitsi" },
+        { "key": "XMPP_RECORDER_DOMAIN", "value": "recorder.meet.jitsi" },
+        { "key": "JICOFO_AUTH_PASSWORD", "value": "${JICOFO_AUTH_PASSWORD}" },
+        { "key": "JVB_AUTH_PASSWORD", "value": "${JVB_AUTH_PASSWORD}" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/prosody/config", "containerPath": "/config" },
+        { "hostPath": "${APP_DATA_DIR}/data/prosody/plugins", "containerPath": "/prosody-plugins-custom" }
+      ]
+    },
+    {
+      "name": "jicofo",
+      "image": "jitsi/jicofo:stable-10741",
+      "internalPort": 8888,
+      "dependsOn": {
+        "prosody": { "condition": "service_started" }
+      },
+      "environment": [
+        { "key": "XMPP_SERVER", "value": "prosody" },
+        { "key": "XMPP_DOMAIN", "value": "meet.jitsi" },
+        { "key": "XMPP_AUTH_DOMAIN", "value": "auth.meet.jitsi" },
+        { "key": "XMPP_PORT", "value": "5222" },
+        { "key": "JICOFO_AUTH_PASSWORD", "value": "${JICOFO_AUTH_PASSWORD}" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/jicofo", "containerPath": "/config" }
+      ]
+    },
+    {
+      "name": "jvb",
+      "image": "jitsi/jvb:stable-10741",
+      "internalPort": 8080,
+      "dependsOn": {
+        "prosody": { "condition": "service_started" }
+      },
+      "addPorts": [
+        {
+          "containerPort": 10000,
+          "hostPort": 10000,
+          "udp": true
+        }
+      ],
+      "environment": [
+        { "key": "XMPP_SERVER", "value": "prosody" },
+        { "key": "XMPP_DOMAIN", "value": "meet.jitsi" },
+        { "key": "XMPP_AUTH_DOMAIN", "value": "auth.meet.jitsi" },
+        { "key": "XMPP_PORT", "value": "5222" },
+        { "key": "JVB_AUTH_PASSWORD", "value": "${JVB_AUTH_PASSWORD}" },
+        { "key": "JVB_ADVERTISE_IPS", "value": "${JVB_ADVERTISE_IPS}" },
+        { "key": "TZ", "value": "${TZ}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/jvb", "containerPath": "/config" }
+      ]
+    }
+  ]
+}
