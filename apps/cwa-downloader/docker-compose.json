@@ -1,13 +1,15 @@
 {
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
+  "schemaVersion": 2,
   "services": [
     {
       "name": "cwa-downloader",
       "image": "ghcr.io/calibrain/shelfmark:v1.2.1",
-      "environment": [
-        { "key": "PUID", "value": "1000" },
-        { "key": "PGID", "value": "1000" },
-        { "key": "TZ", "value": "${TZ}" }
-      ],
+      "environment": {
+        "PUID": "1000",
+        "PGID": "1000",
+        "TZ": "${TZ}"
+      },
       "internalPort": 8084,
       "volumes": [
         {
