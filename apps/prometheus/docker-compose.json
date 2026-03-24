@@ -1,5 +1,4 @@
 {
-  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
   "services": [
     {
       "name": "prometheus",
@@ -16,7 +15,7 @@
           "containerPath": "/prometheus"
         }
       ],
-      "environment": {}
+      "environment": []
     },
     {
       "name": "node-exporter",
@@ -84,6 +83,5 @@
         }
       ]
     }
-  ],
-  "schemaVersion": 2
+  ]
 }

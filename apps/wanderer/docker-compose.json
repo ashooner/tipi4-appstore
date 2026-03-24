@@ -4,11 +4,11 @@
       "name": "search",
       "container_name": "wanderer-search",
       "image": "getmeili/meilisearch:v1.11.3",
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "MEILI_NO_ANALYTICS": "true"
-      },
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "MEILI_NO_ANALYTICS", "value": "true" }
+      ],
       "ports": ["7700:7700"],
       "networks": ["wanderer"],
       "volumes": [{"hostPath": "${APP_DATA_DIR}/data/data.ms", "containerPath": "/meili_data/data.ms"}],
@@ -28,12 +28,12 @@
       "depends_on": {
         "search": { "condition": "service_healthy" }
       },
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "POCKETBASE_ENCRYPTION_KEY": "<YOUR_ENCRYPTION_KEY_HERE>",
-        "ORIGIN": "http://localhost:3000"
-      },
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "POCKETBASE_ENCRYPTION_KEY", "value": "<YOUR_ENCRYPTION_KEY_HERE>" },
+        { "key": "ORIGIN", "value": "http://localhost:3000" }
+      ],
       "ports": ["8090:8090"],
       "networks": ["wanderer"],
       "restart": "unless-stopped",
@@ -49,19 +49,19 @@
         "search": { "condition": "service_healthy" },
         "db": { "condition": "service_started" }
       },
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "ORIGIN": "http://localhost:3000",
-        "BODY_SIZE_LIMIT": "Infinity",
-        "PUBLIC_POCKETBASE_URL": "http://db:8090",
-        "PUBLIC_DISABLE_SIGNUP": "false",
-        "UPLOAD_FOLDER": "/app/uploads",
-        "UPLOAD_USER": "",
-        "UPLOAD_PASSWORD": "",
-        "PUBLIC_VALHALLA_URL": "https://valhalla1.openstreetmap.de",
-        "PUBLIC_NOMINATIM_URL": "https://nominatim.openstreetmap.org"
-      },
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "ORIGIN", "value": "http://localhost:3000" },
+        { "key": "BODY_SIZE_LIMIT", "value": "Infinity" },
+        { "key": "PUBLIC_POCKETBASE_URL", "value": "http://db:8090" },
+        { "key": "PUBLIC_DISABLE_SIGNUP", "value": "false" },
+        { "key": "UPLOAD_FOLDER", "value": "/app/uploads" },
+        { "key": "UPLOAD_USER", "value": "" },
+        { "key": "UPLOAD_PASSWORD", "value": "" },
+        { "key": "PUBLIC_VALHALLA_URL", "value": "https://valhalla1.openstreetmap.de" },
+        { "key": "PUBLIC_NOMINATIM_URL", "value": "https://nominatim.openstreetmap.org" }
+      ],
       "volumes": [{"hostPath": "${APP_DATA_DIR}/data/uploads", "containerPath": "/app/uploads"}],
       "ports": ["3000:3000"],
       "networks": ["wanderer"],
