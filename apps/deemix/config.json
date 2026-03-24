@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schemas.runtipi.io/app-info.json",
+  "name": "Deemix",
+  "id": "deemix",
+  "available": true,
+  "short_desc": "A deezer downloader built from the ashes of Deezloader Remix.",
+  "author": "bambanah",
+  "port": 6595,
+  "categories": [
+    "media",
+    "music"
+  ],
+  "description": "Deemix is a deezer downloader built from the ashes of Deezloader Remix. It allows you to download music from Deezer with full quality support including FLAC and MP3 320kbps.",
+  "tipi_version": 1,
+  "version": "v4.5.0",
+  "source": "https://github.com/bambanah/deemix",
+  "website": "https://deemix.app",
+  "exposable": true,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1742673600000,
+  "updated_at": 1742673600000,
+  "dynamic_config": true,
+  "form_fields": []
+}

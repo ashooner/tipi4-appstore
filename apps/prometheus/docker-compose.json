@@ -16,7 +16,7 @@
           "containerPath": "/prometheus"
         }
       ],
-      "environment": []
+      "environment": {}
     },
     {
       "name": "node-exporter",

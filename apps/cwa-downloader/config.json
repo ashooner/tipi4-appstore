@@ -1,22 +1,22 @@
 {
   "$schema": "../app-info-schema.json",
-  "name": "Calibre-Web-Automated Book Downloader",
+  "name": "Shelfmark",
   "available": true,
   "exposable": true,
   "dynamic_config": true,
   "port": 8104,
-  "tipi_version": 16,
-  "version": "0.4.0",
+  "tipi_version": 17,
+  "version": "1.2.1",
   "id": "cwa-downloader",
   "categories": ["books"],
   "description": "On the initial setup screen, enter /calibre as your calibre library location, check box Separate Book Files from Library, then enter /books. \n Default admin login: Username: admin Password: admin123",
   "short_desc": "A unified web interface for searching and downloading books from multiple sources — all in one place. Works out of the box with popular web sources, no configuration required. Add metadata providers, additional release sources, and download clients to create a single hub for building your digital library.",
   "author": "https://github.com/calibrain",
-  "source": "https://github.com/calibrain/calibre-web-automated-book-downloader",
+  "source": "https://github.com/calibrain/shelfmark",
   "form_fields": [
   ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1691943801422,
-  "updated_at": 1761338378451,
+  "updated_at": 1742688000000,
   "min_tipi_version": "4.5.0"
 }
