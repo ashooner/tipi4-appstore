@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.runtipi.io/app-info.json",
+  "name": "Jitsi Meet",
+  "id": "jitsi",
+  "available": true,
+  "short_desc": "Open-source, self-hosted video conferencing.",
+  "author": "Jitsi",
+  "port": 8443,
+  "categories": ["media", "social"],
+  "description": "Jitsi Meet is a fully encrypted, 100% open source video conferencing solution. No account needed — just share a link and start a meeting.",
+  "tipi_version": 1,
+  "version": "stable-10741",
+  "source": "https://github.com/jitsi/docker-jitsi-meet",
+  "website": "https://jitsi.org",
+  "exposable": true,
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1742688000000,
+  "updated_at": 1742688000000,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "url",
+      "label": "Public URL",
+      "hint": "Full URL where Jitsi will be accessed — must match what users type in their browser.",
+      "placeholder": "https://meet.example.com",
+      "env_variable": "PUBLIC_URL",
+      "required": true
+    },
+    {
+      "type": "random",
+      "label": "Jicofo Auth Password",
+      "hint": "Auto-generated internal password for Jicofo authentication.",
+      "env_variable": "JICOFO_AUTH_PASSWORD",
+      "required": true
+    },
+    {
+      "type": "random",
+      "label": "JVB Auth Password",
+      "hint": "Auto-generated internal password for the video bridge.",
+      "env_variable": "JVB_AUTH_PASSWORD",
+      "required": true
+    },
+    {
+      "type": "ip",
+      "label": "JVB Advertise IP",
+      "hint": "Public IP of this server. Required if running behind NAT for media to work.",
+      "placeholder": "1.2.3.4",
+      "env_variable": "JVB_ADVERTISE_IPS",
+      "required": false
+    }
+  ]
+}
