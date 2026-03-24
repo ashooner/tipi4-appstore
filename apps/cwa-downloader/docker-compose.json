@@ -4,20 +4,11 @@
     {
       "name": "cwa-downloader",
       "image": "ghcr.io/calibrain/calibre-web-automated-book-downloader:v0.4.0",
-      "environment": [
-        {
-          "key": "PUID",
-          "value": "1000"
-        },
-        {
-          "key": "PGID",
-          "value": "1000"
-        },
-        {
-          "key": "TZ",
-          "value": "${TZ}"
-        }
-      ],
+      "environment": {
+        "PUID": "1000",
+        "PGID": "1000",
+        "TZ": "${TZ}"
+      },
       "internalPort": 8084,
       "volumes": [
         {

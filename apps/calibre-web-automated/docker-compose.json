@@ -4,24 +4,12 @@
     {
       "name": "calibre-web-automated",
       "image": "crocodilestick/calibre-web-automated:V3.1.4",
-      "environment": [
-        {
-          "key": "PUID",
-          "value": "1000"
-        },
-        {
-          "key": "PGID",
-          "value": "1000"
-        },
-        {
-          "key": "TZ",
-          "value": "${TZ}"
-        },
-        {
-          "key": "HARDCOVER_TOKEN",
-          "value": "${HARDCOVER_TOKEN}"
-        }
-      ],
+      "environment": {
+        "PUID": "1000",
+        "PGID": "1000",
+        "TZ": "${TZ}",
+        "HARDCOVER_TOKEN": "${HARDCOVER_TOKEN}"
+      },
       "internalPort": 8083,
       "volumes": [
         {
