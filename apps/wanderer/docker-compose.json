@@ -1,79 +1,66 @@
 {
-  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
   "schemaVersion": 2,
   "services": [
     {
       "name": "search",
-      "container_name": "wanderer-search",
       "image": "getmeili/meilisearch:v1.11.3",
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "MEILI_NO_ANALYTICS": "true"
-      },
-      "ports": ["7700:7700"],
-      "networks": ["wanderer"],
-      "volumes": [{"hostPath": "${APP_DATA_DIR}/data/data.ms", "containerPath": "/meili_data/data.ms"}],
-      "restart": "unless-stopped",
-      "healthcheck": {
+      "internalPort": 7700,
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "MEILI_NO_ANALYTICS", "value": "true" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/data.ms", "containerPath": "/meili_data/data.ms" }
+      ],
+      "healthCheck": {
         "test": "curl --fail http://localhost:7700/health || exit 1",
         "interval": "15s",
         "retries": 10,
-        "start_period": "20s",
+        "startPeriod": "20s",
         "timeout": "10s"
       }
     },
     {
       "name": "db",
-      "container_name": "wanderer-db",
       "image": "flomp/wanderer-db",
-      "depends_on": {
+      "internalPort": 8090,
+      "dependsOn": {
         "search": { "condition": "service_healthy" }
       },
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "POCKETBASE_ENCRYPTION_KEY": "<YOUR_ENCRYPTION_KEY_HERE>",
-        "ORIGIN": "http://localhost:3000"
-      },
-      "ports": ["8090:8090"],
-      "networks": ["wanderer"],
-      "restart": "unless-stopped",
-      "volumes": [{"hostPath": "${APP_DATA_DIR}/data/pb_data", "containerPath": "/pb_data"}]
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "POCKETBASE_ENCRYPTION_KEY", "value": "<YOUR_ENCRYPTION_KEY_HERE>" },
+        { "key": "ORIGIN", "value": "http://localhost:3000" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/pb_data", "containerPath": "/pb_data" }
+      ]
     },
     {
       "name": "web",
-      "container_name": "wanderer-web",
       "image": "flomp/wanderer-web",
       "isMain": true,
       "internalPort": 3000,
-      "depends_on": {
+      "dependsOn": {
         "search": { "condition": "service_healthy" },
         "db": { "condition": "service_started" }
       },
-      "environment": {
-        "MEILI_URL": "http://search:7700",
-        "MEILI_MASTER_KEY": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo",
-        "ORIGIN": "http://localhost:3000",
-        "BODY_SIZE_LIMIT": "Infinity",
-        "PUBLIC_POCKETBASE_URL": "http://db:8090",
-        "PUBLIC_DISABLE_SIGNUP": "false",
-        "UPLOAD_FOLDER": "/app/uploads",
-        "UPLOAD_USER": "",
-        "UPLOAD_PASSWORD": "",
-        "PUBLIC_VALHALLA_URL": "https://valhalla1.openstreetmap.de",
-        "PUBLIC_NOMINATIM_URL": "https://nominatim.openstreetmap.org"
-      },
-      "volumes": [{"hostPath": "${APP_DATA_DIR}/data/uploads", "containerPath": "/app/uploads"}],
-      "ports": ["3000:3000"],
-      "networks": ["wanderer"],
-      "restart": "unless-stopped"
-    }
-  ],
-  "networks": [
-    {
-      "name": "wanderer",
-      "driver": "bridge"
+      "environment": [
+        { "key": "MEILI_URL", "value": "http://search:7700" },
+        { "key": "MEILI_MASTER_KEY", "value": "vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo" },
+        { "key": "ORIGIN", "value": "http://localhost:3000" },
+        { "key": "BODY_SIZE_LIMIT", "value": "Infinity" },
+        { "key": "PUBLIC_POCKETBASE_URL", "value": "http://db:8090" },
+        { "key": "PUBLIC_DISABLE_SIGNUP", "value": "false" },
+        { "key": "UPLOAD_FOLDER", "value": "/app/uploads" },
+        { "key": "PUBLIC_VALHALLA_URL", "value": "https://valhalla1.openstreetmap.de" },
+        { "key": "PUBLIC_NOMINATIM_URL", "value": "https://nominatim.openstreetmap.org" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/uploads", "containerPath": "/app/uploads" }
+      ]
     }
   ]
 }
