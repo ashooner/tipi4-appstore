@@ -1,0 +1,22 @@
+services:
+  session-app:
+    image: ghcr.io/ashooner/session-app-web:0.1.0
+    restart: unless-stopped
+    environment:
+      - PRIVATE_POCKETBASE_URL=http://session-app-pb:8090
+      - ORIGIN=https://${APP_DOMAIN:-localhost}
+    depends_on:
+      session-app-pb:
+        condition: service_started
+    x-runtipi:
+      is_main: true
+      internal_port: 3000
+
+  session-app-pb:
+    image: ghcr.io/ashooner/session-app-pb:0.1.0
+    restart: unless-stopped
+    volumes:
+      - ${APP_DATA_DIR}/data/pb_data:/app/pb_data
+
+x-runtipi:
+  schema_version: 2

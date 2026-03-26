@@ -1,0 +1,19 @@
+{
+  "$schema": "../app-info-schema.json",
+  "dynamic_config": true,
+  "name": "Session",
+  "id": "session-app",
+  "version": "0.1.0",
+  "tipi_version": 1,
+  "available": true,
+  "exposable": true,
+  "port": 8710,
+  "short_desc": "Collaborative music practice and recording",
+  "description": "A collaborative music practice app with multi-channel recording, song management, and group sharing.",
+  "author": "session-app",
+  "source": "https://github.com/OWNER/session-app",
+  "categories": ["media"],
+  "supported_architectures": ["arm64", "amd64"],
+  "min_tipi_version": "4.5.0",
+  "form_fields": []
+}
