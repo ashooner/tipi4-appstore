@@ -3,7 +3,7 @@
   "dynamic_config": true,
   "name": "Session",
   "id": "session-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "tipi_version": 1,
   "available": true,
   "exposable": true,
