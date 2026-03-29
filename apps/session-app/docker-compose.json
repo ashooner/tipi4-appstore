@@ -10,7 +10,7 @@
         "session-app-pb": { "condition": "service_started" }
       },
       "environment": [
-        { "key": "PRIVATE_POCKETBASE_URL", "value": "http://session-app-pb:0.1.3" },
+        { "key": "PRIVATE_POCKETBASE_URL", "value": "http://session-app-pb:8090" },
         { "key": "ORIGIN", "value": "https://${APP_DOMAIN}" }
       ]
     },
