@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "session-app",
-      "image": "ghcr.io/ashooner/session-app-web:0.1.3",
+      "image": "ghcr.io/ashooner/session-app-web:0.1.4",
       "isMain": true,
       "internalPort": 3000,
       "dependsOn": {
@@ -16,7 +16,7 @@
     },
     {
       "name": "session-app-pb",
-      "image": "ghcr.io/ashooner/session-app-pb:0.1.3",
+      "image": "ghcr.io/ashooner/session-app-pb:0.1.4",
       "internalPort": 8090,
       "environment": [
         { "key": "PRODUCTION", "value": "true" }
