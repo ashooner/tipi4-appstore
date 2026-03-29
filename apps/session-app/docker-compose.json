@@ -3,20 +3,20 @@
   "services": [
     {
       "name": "session-app",
-      "image": "ghcr.io/ashooner/session-app-web:0.1.2",
+      "image": "ghcr.io/ashooner/session-app-web:0.1.3",
       "isMain": true,
       "internalPort": 3000,
       "dependsOn": {
         "session-app-pb": { "condition": "service_started" }
       },
       "environment": [
-        { "key": "PRIVATE_POCKETBASE_URL", "value": "http://session-app-pb:0.1.2" },
+        { "key": "PRIVATE_POCKETBASE_URL", "value": "http://session-app-pb:0.1.3" },
         { "key": "ORIGIN", "value": "https://${APP_DOMAIN}" }
       ]
     },
     {
       "name": "session-app-pb",
-      "image": "ghcr.io/ashooner/session-app-pb:0.1.2",
+      "image": "ghcr.io/ashooner/session-app-pb:0.1.3",
       "internalPort": 8090,
       "environment": [
         { "key": "PRODUCTION", "value": "true" }
