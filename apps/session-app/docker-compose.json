@@ -18,6 +18,9 @@
       "name": "session-app-pb",
       "image": "ghcr.io/ashooner/session-app-pb:0.1.2",
       "internalPort": 8090,
+      "environment": [
+        { "key": "PRODUCTION", "value": "true" }
+      ],
       "volumes": [
         { "hostPath": "${APP_DATA_DIR}/data/pb_data", "containerPath": "/app/pb_data" }
       ]
