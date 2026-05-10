@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.runtipi.io/app-info.json",
+  "name": "Blinko",
+  "id": "blinko",
+  "available": true,
+  "short_desc": "Self-hosted AI note-taking with fast capture and retrieval.",
+  "author": "Blinko Space",
+  "port": 1111,
+  "categories": ["ai", "utilities"],
+  "description": "Blinko is an open-source, self-hosted personal AI note tool focused on privacy, quick capture, and AI-assisted retrieval.",
+  "tipi_version": 1,
+  "version": "1.8.7",
+  "source": "https://github.com/blinkospace/blinko",
+  "website": "https://blinko.space",
+  "exposable": true,
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1778449888000,
+  "updated_at": 1778449888000,
+  "dynamic_config": true,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "NextAuth Secret",
+      "hint": "Auto-generated secret used by Blinko for session and authentication security.",
+      "env_variable": "NEXTAUTH_SECRET",
+      "required": true
+    },
+    {
+      "type": "random",
+      "label": "Postgres Password",
+      "hint": "Auto-generated internal password for Blinko's bundled Postgres database.",
+      "env_variable": "BLINKO_POSTGRES_PASSWORD",
+      "required": true
+    }
+  ]
+}
