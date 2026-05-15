@@ -1,6 +1,6 @@
 services:
   session-app:
-    image: ghcr.io/ashooner/session-app-web:0.2.1
+    image: ghcr.io/ashooner/session-app-web:0.2.2
     restart: unless-stopped
     environment:
       - PRIVATE_POCKETBASE_URL=http://session-app-pb:8090
@@ -13,7 +13,7 @@ services:
       internal_port: 3000
 
   session-app-pb:
-    image: ghcr.io/ashooner/session-app-pb:0.2.1
+    image: ghcr.io/ashooner/session-app-pb:0.2.2
     restart: unless-stopped
     volumes:
       - ${APP_DATA_DIR}/data/pb_data:/app/pb_data
