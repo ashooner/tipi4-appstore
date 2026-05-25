@@ -9,11 +9,13 @@
       "restart": "unless-stopped",
       "environment": [
         { "key": "HISTER_DATA_DIR", "value": "/hister/data" },
+        { "key": "HISTER_CONFIG", "value": "/hister/data/config.yml" },
         { "key": "HISTER__SERVER__ADDRESS", "value": "0.0.0.0:4433" },
         { "key": "HISTER__SERVER__BASE_URL", "value": "https://${APP_DOMAIN}" }
       ],
       "volumes": [
-        { "hostPath": "${APP_DATA_DIR}/data/hister", "containerPath": "/hister/data" }
+        { "hostPath": "${APP_DATA_DIR}/data/hister", "containerPath": "/hister/data" },
+        { "hostPath": "${APP_DATA_DIR}/data/config.yml", "containerPath": "/hister/data/config.yml" }
       ],
       "healthCheck": {
         "test": "wget --spider -q http://127.0.0.1:4433/ || exit 1",
