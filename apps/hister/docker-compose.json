@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "hister",
+      "image": "ghcr.io/asciimoo/hister:latest",
+      "isMain": true,
+      "internalPort": 4433,
+      "restart": "unless-stopped",
+      "environment": [
+        { "key": "HISTER_DATA_DIR", "value": "/hister/data" },
+        { "key": "HISTER__SERVER__ADDRESS", "value": "0.0.0.0:4433" },
+        { "key": "HISTER__SERVER__BASE_URL", "value": "https://${APP_DOMAIN}" }
+      ],
+      "volumes": [
+        { "hostPath": "${APP_DATA_DIR}/data/hister", "containerPath": "/hister/data" }
+      ],
+      "healthCheck": {
+        "test": "wget --spider -q http://127.0.0.1:4433/ || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    }
+  ]
+}
