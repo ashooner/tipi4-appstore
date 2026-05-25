@@ -4,7 +4,7 @@
   "name": "Hister",
   "id": "hister",
   "version": "latest",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "available": true,
   "exposable": true,
   "port": 4433,
