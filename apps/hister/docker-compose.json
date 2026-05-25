@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "hister",
-      "image": "ghcr.io/asciimoo/hister:latest",
+      "image": "ghcr.io/asciimoo/hister:latest-root",
       "isMain": true,
       "internalPort": 4433,
       "restart": "unless-stopped",
