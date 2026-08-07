@@ -1,0 +1,36 @@
+{
+  "$schema": "../app-info-schema.json",
+  "dynamic_config": true,
+  "name": "HomePool",
+  "id": "homepool",
+  "version": "1.12.1",
+  "tipi_version": 1,
+  "available": true,
+  "exposable": true,
+  "port": 8090,
+  "short_desc": "Self-hosted pool and spa maintenance tracker",
+  "description": "HomePool tracks pool and spa water measurements, treatments, maintenance, and dosage recommendations, with multi-pool support and a Home Assistant integration.",
+  "author": "alecc08",
+  "source": "https://github.com/alecc08/homepool",
+  "created_at": 1786105591000,
+  "updated_at": 1786105591000,
+  "categories": ["utilities", "data"],
+  "supported_architectures": ["arm64", "amd64"],
+  "min_tipi_version": "4.5.0",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "PostgreSQL password",
+      "hint": "Auto-generated password for HomePool's internal PostgreSQL database.",
+      "env_variable": "HOMEPOOL_POSTGRES_PASSWORD",
+      "required": true
+    },
+    {
+      "type": "random",
+      "label": "Session secret",
+      "hint": "Auto-generated secret used to secure HomePool login sessions.",
+      "env_variable": "HOMEPOOL_SESSION_SECRET",
+      "required": true
+    }
+  ]
+}

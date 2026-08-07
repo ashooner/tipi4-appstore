@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "homepool-web",
+      "image": "ghcr.io/alecc08/homepool-web:1.12.1",
+      "isMain": true,
+      "internalPort": 80,
+      "restart": "unless-stopped",
+      "dependsOn": {
+        "homepool-api": { "condition": "service_healthy" }
+      },
+      "environment": [
+        { "key": "BACKEND_URL", "value": "http://homepool-api:8003" }
+      ],
+      "healthCheck": {
+        "test": "nc -z 127.0.0.1 80 || exit 1",
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "10s"
+      },
+      "securityOpt": ["no-new-privileges:true"],
+      "deploy": {
+        "resources": {
+          "limits": {
+            "cpus": "0.5",
+            "memory": "128M"
+          }
+        }
+      }
+    },
+    {
+      "name": "homepool-api",
+      "image": "ghcr.io/alecc08/homepool-api:1.12.1",
+      "internalPort": 8003,
+      "restart": "unless-stopped",
+      "dependsOn": {
+        "homepool-db": { "condition": "service_healthy" }
+      },
+      "environment": [
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql+psycopg://homepool:${HOMEPOOL_POSTGRES_PASSWORD}@homepool-db:5432/homepool"
+        },
+        { "key": "SESSION_SECRET", "value": "${HOMEPOOL_SESSION_SECRET}" },
+        { "key": "ALLOWED_ORIGINS", "value": "https://${APP_DOMAIN}" },
+        { "key": "APP_BASE_URL", "value": "https://${APP_DOMAIN}" },
+        { "key": "DEBUG", "value": "false" }
+      ],
+      "healthCheck": {
+        "test": "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8003/health')\" || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "deploy": {
+        "resources": {
+          "limits": {
+            "cpus": "1.0",
+            "memory": "256M"
+          }
+        }
+      }
+    },
+    {
+      "name": "homepool-db",
+      "image": "postgres:16-alpine",
+      "internalPort": 5432,
+      "restart": "unless-stopped",
+      "environment": [
+        { "key": "POSTGRES_USER", "value": "homepool" },
+        { "key": "POSTGRES_PASSWORD", "value": "${HOMEPOOL_POSTGRES_PASSWORD}" },
+        { "key": "POSTGRES_DB", "value": "homepool" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U homepool -d homepool || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  ]
+}
