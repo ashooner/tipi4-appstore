@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "stemdeck",
+      "image": "ghcr.io/stemdeckapp/stemdeck:0.15.2",
+      "isMain": true,
+      "internalPort": 8000,
+      "restart": "unless-stopped",
+      "environment": [
+        { "key": "PUID", "value": "${UID}" },
+        { "key": "PGID", "value": "${GID}" },
+        { "key": "STEMDECK_PERSIST_LIBRARY", "value": "1" },
+        { "key": "STEMDECK_DEMUCS_DEVICE", "value": "cuda" },
+        { "key": "NVIDIA_VISIBLE_DEVICES", "value": "all" },
+        { "key": "NVIDIA_DRIVER_CAPABILITIES", "value": "all" }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/jobs",
+          "containerPath": "/app/jobs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/cache",
+          "containerPath": "/cache"
+        }
+      ],
+      "deploy": {
+        "resources": {
+          "reservations": {
+            "devices": [
+              {
+                "driver": "nvidia",
+                "count": "all",
+                "capabilities": ["gpu"]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "../app-info-schema.json",
+  "dynamic_config": true,
+  "name": "StemDeck",
+  "id": "stemdeck",
+  "version": "0.15.2",
+  "tipi_version": 1,
+  "available": true,
+  "exposable": true,
+  "port": 8000,
+  "short_desc": "GPU-accelerated local music stem separation",
+  "description": "StemDeck separates music into vocals, drums, bass, guitar, piano, and other stems, then provides a DAW-style browser mixer for playback, looping, and export.",
+  "author": "stemdeckapp",
+  "source": "https://github.com/stemdeckapp/stemdeck",
+  "created_at": 1788062400000,
+  "updated_at": 1788062400000,
+  "categories": ["media", "music", "ai"],
+  "supported_architectures": ["amd64"],
+  "min_tipi_version": "4.5.0",
+  "form_fields": []
+}
